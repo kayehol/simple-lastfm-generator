@@ -3,8 +3,8 @@ import { useQuery } from 'react-query';
 
 import { fetchArtists } from './fetchArtists';
 import { fetchTags } from './fetchTags';
-import { ArtistQuery } from './types/ArtistQuery';
-import { Artist } from './types/Artist';
+import { Artist, ArtistQuery } from './types/Artist';
+import { TagsQuery } from './types/Tag';
 
 export const Chart = () => {
     const [ username, setUsername ] = useState('');
@@ -24,9 +24,8 @@ export const Chart = () => {
         });
         return artistsList ? artistsList.join(' | ') : '';
     }
-    const formatTags = (tags: []): string => {
-        const tagsList: string[] = tags.map(tag => tag.toptags?.tag[0]?.name);
-        console.log('tagsList',tagsList);
+    const formatTags = (tags: TagsQuery | undefined): string => {
+        const tagsList: string[] = tags ? tags.map((tag) => tag?.toptags?.tag[0]?.name) : [''];
         return `tags: ${tagsList.join(', ')}`
     }
 

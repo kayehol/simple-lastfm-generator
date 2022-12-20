@@ -1,3 +1,10 @@
+export type ArtistQuery = {
+    topartists: {
+        artist: Artist[],
+        '@attr': {}
+    }
+}
+
 export type Artist = {
     streamable: string;
     image: [];
