@@ -14,34 +14,42 @@ export const Chart = () => {
         enabled: false 
     });
     // get top tags for every artist
-    const { isIdle, data: tags } = useQuery(['tags', topArtists], fetchTags, {
+    const { data: tags } = useQuery(['tags', topArtists], fetchTags, {
         enabled: !!topArtists 
     });
             
     const formatArtist = (artists: ArtistQuery): string => {
-        const artistsList: string[] = artists?.topartists.artist.map((artist: Artist, index: number) => {
+        const artistsList = artists?.topartists.artist;
+        
+        if (artistsList && artistsList.length == 0) return "user hasn't listened to any music in the selected date range."
+        
+        const artistNameRank: string[] = artists?.topartists.artist.map((artist: Artist, index: number) => {
             return `${artist['@attr'].rank}. ${artist.name}`;
         });
-        return artistsList ? artistsList.join(' | ') : '';
+
+        return artistNameRank.join(' | ');
     }
-    const formatTags = (tags: TagsQuery | undefined): string => {
-        const tagsList: string[] = tags ? tags.map((tag) => tag?.toptags?.tag[0]?.name) : [''];
-        return `tags: ${tagsList.join(', ')}`
+    const formatTags = (tags: TagsQuery): string => {
+        const tagsList: string[] = tags.map((tag) => tag?.toptags?.tag[0]?.name);
+        return tagsList.length > 0 ? `tags: ${tagsList.join(', ')}` : '';
     }
 
     return (
         <>
-            <div>
-                <input 
+            <form onSubmit={event => event.preventDefault()}>
+                <input
+                    autoFocus 
                     type="text" 
-                    onChange={event => setUsername(event.currentTarget?.value)} />
-                <button onClick={() => refetch()}>
+                    onChange={event => setUsername(event.currentTarget?.value)}
+                    placeholder="username" 
+                />
+                <button type="submit" onClick={() => refetch()}>
                     generate
                 </button>
-            </div>
-            {username && <pre>Output for {username}:</pre>}
-            {<pre>{formatArtist(topArtists)}</pre>}
-            {<pre>{formatTags(tags)}</pre>}
+            </form>
+            {username && <pre>Output for {username}'s last 7 days:</pre>}
+            {topArtists && <pre>{formatArtist(topArtists)}</pre>}
+            {tags && <pre>{formatTags(tags)}</pre>}
             {isError && <>{error.message}</>}
             {isLoading && <pre>Loading...</pre>}
         </>
