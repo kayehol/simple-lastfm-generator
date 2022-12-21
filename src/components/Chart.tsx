@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 
-import { fetchArtists } from './fetchArtists';
-import { fetchTags } from './fetchTags';
-import { Artist, ArtistQuery } from './types/Artist';
-import { TagsQuery } from './types/Tag';
+import { fetchArtists } from '../queries/fetchArtists';
+import { fetchTags } from '../queries/fetchTags';
+import { Artist, ArtistQuery } from '../types/Artist';
+import { TagsQuery } from '../types/Tag';
 
 export const Chart = () => {
     const [ username, setUsername ] = useState('');

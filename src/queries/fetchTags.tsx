@@ -1,7 +1,8 @@
-import { Params } from "./types/Params";
-import { Artist } from "./types/Artist";
+import { Params } from "../types/Params";
+import { Artist } from "../types/Artist";
+import { TagsQuery } from "../types/Tag";
 
-export const fetchTags = async ({ queryKey }) => {
+export const fetchTags = async ({ queryKey }): Promise<TagsQuery> => {
     const apiKey: string = import.meta.env.VITE_LASTFM_API_KEY; 
     const apiRoot: string = import.meta.env.VITE_LASTFM_API_ROOT;
     const [ _key, topArtists ] = queryKey;

@@ -1,6 +1,7 @@
-import { Params } from './types/Params';
+import { ArtistQuery } from '../types/Artist';
+import { Params } from '../types/Params';
 
-export const fetchArtists = async ({ queryKey }) => {
+export const fetchArtists = async ({ queryKey }): Promise<ArtistQuery> => {
     const apiKey: string = import.meta.env.VITE_LASTFM_API_KEY; 
     const apiRoot: string = import.meta.env.VITE_LASTFM_API_ROOT;
     const [_key, username] = queryKey;
