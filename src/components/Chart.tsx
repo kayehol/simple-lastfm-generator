@@ -1,10 +1,46 @@
 import { useState } from 'react';
 import { useQuery } from 'react-query';
+import styled from 'styled-components';
 
 import { fetchArtists } from '../queries/fetchArtists';
 import { fetchTags } from '../queries/fetchTags';
 import { Artist, ArtistQuery } from '../types/Artist';
 import { TagsQuery } from '../types/Tag';
+
+const Styled = styled.div`
+    border: 4px solid black;
+    margin: 1em;
+    padding: 1em;
+    form {
+        margin-bottom: 1em;
+    }
+    input {
+        border: 2px solid black;
+        padding: 0.5em 0 0.5em 0.5em;
+    }
+    button {
+        margin-left: 1em;
+        background-color: black;
+        color: white;
+        border: 0;
+        padding: 0.5em;
+    }
+    .output {
+        font-size: 150%;
+        padding: 1em;
+        border: 1px solid grey;
+        height: 20vh;
+        width: 40vw;
+        word-wrap; break-word;
+    }
+    .upperForm {
+        display: flex;
+        flex-direction: row;
+    }
+    .config {
+        margin-left: 1em;
+    }
+`
 
 export const Chart = () => {
     const [ username, setUsername ] = useState('');
@@ -35,23 +71,29 @@ export const Chart = () => {
     }
 
     return (
-        <>
-            <form onSubmit={event => event.preventDefault()}>
-                <input
-                    autoFocus 
-                    type="text" 
-                    onChange={event => setUsername(event.currentTarget?.value)}
-                    placeholder="username" 
-                />
-                <button type="submit" onClick={() => refetch()}>
-                    generate
-                </button>
-            </form>
-            {username && <pre>Output for {username}'s last 7 days:</pre>}
-            {topArtists && <pre>{formatArtist(topArtists)}</pre>}
-            {tags && <pre>{formatTags(tags)}</pre>}
-            {isError && <>{error.message}</>}
-            {isLoading && <pre>Loading...</pre>}
-        </>
+        <Styled>
+            <div className='upperForm'>
+                <form onSubmit={event => event.preventDefault()}>
+                    <input
+                        autoFocus 
+                        type="text" 
+                        onChange={event => setUsername(event.currentTarget?.value)}
+                        placeholder="username" 
+                    />
+                    <button type="submit" onClick={() => refetch()}>
+                        generate
+                    </button>
+                </form>
+                <div className='config'>
+                    {username && <pre>Output for {username}'s last 7 days:</pre>}
+                </div>
+            </div>
+            <div className='output'>
+                {topArtists && <p>{formatArtist(topArtists)}</p>}
+                {tags && <p>{formatTags(tags)}</p>}
+                {isError && <>{error.message}</>}
+                {isLoading && <pre>Loading...</pre>}
+            </div>
+        </Styled>
     )
 }
