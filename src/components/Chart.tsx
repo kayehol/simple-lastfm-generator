@@ -91,7 +91,7 @@ export const Chart = () => {
             <div className='output'>
                 {topArtists && <p>{formatArtist(topArtists)}</p>}
                 {tags && <p>{formatTags(tags)}</p>}
-                {isError && <>{error.message}</>}
+                {isError && error instanceof Error && <>{error.message}</>}
                 {isLoading && <pre>Loading...</pre>}
             </div>
         </Styled>
