@@ -9,3 +9,9 @@
   padding: 2em;
   width: 100vw;
 }
+@media screen and (max-width: 600px) {
+  .container {
+    flex-direction: column;
+    padding: 0;
+  }
+}
