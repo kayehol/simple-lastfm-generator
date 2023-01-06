@@ -40,7 +40,7 @@ const Styled = styled.div`
     .config {
         margin-left: 1em;
     }
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 900px) {
         .output {
             width: auto;
             height: auto;

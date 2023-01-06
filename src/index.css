@@ -6,7 +6,7 @@ body {
   min-height: 100vh;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 900px) {
   body {
     place-items: start;
   }
