@@ -7,13 +7,14 @@ import { TagsQuery } from "../types/Tag";
 export const fetchTags = async ({ queryKey }: QueryFunctionContext<string[] | (string | ArtistQuery | undefined)[]>): Promise<TagsQuery> => {
     const apiKey: string = import.meta.env.VITE_LASTFM_API_KEY;
     const apiRoot: string = import.meta.env.VITE_LASTFM_API_ROOT;
+    const formatName = (name: string): string => name.trim()
     const [_key, topArtists] = queryKey;
 
     if (topArtists instanceof Object) {
         const tagsList = topArtists?.topartists?.artist?.map(async (artist: Artist) => {
             const params: Params = {
                 method: 'artist.gettoptags',
-                artist: artist.name,
+                artist: formatName(artist.name),
                 api_key: apiKey,
                 format: 'json'
             }
