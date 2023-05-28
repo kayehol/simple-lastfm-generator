@@ -1,6 +1,12 @@
 #root {
   max-width: 100vw;
 }
+body {
+  --color-background: #fafafa;
+  --color-foreground: #1f2023;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
 .container {
   display: flex;
   flex-direction: row;
@@ -12,5 +18,11 @@
   .container {
     flex-direction: column;
     padding: 0;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  body {
+    --color-background: #1f2023;
+    --color-foreground: #efefef;
   }
 }
