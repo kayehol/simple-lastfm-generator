@@ -21,9 +21,13 @@ export const fetchTags = async ({ queryKey }: QueryFunctionContext<string[] | (s
                 throw new Error('Environment variables are not accessible')
 
             const response = await fetch(
-                apiRoot + `?method=${params.method}&api_key=${params.api_key}&artist=${params.artist}&format=${params.format}`
+                apiRoot + `?method=${params.method}
+                            &api_key=${params.api_key}
+                            &artist=${params.artist}
+                            &format=${params.format}`
             );
-            if (!response.ok) throw new Error('Network response was not ok');
+            if (!response.ok)
+                throw new Error('Network response was not ok');
 
             return response.json();
         });
