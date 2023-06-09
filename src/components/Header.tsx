@@ -1,9 +1,10 @@
 import styled  from 'styled-components';
+import './../App.css';
 
 const Style = styled.div`
     display: flex;
     flex-direction: column;
-    border: 4px solid black;
+    border: 4px solid var(--color-foreground);
     padding: 0.5em 2em;
     margin: 1em;
 `

@@ -6,9 +6,10 @@ import { fetchArtists } from '../queries/fetchArtists';
 import { fetchTags } from '../queries/fetchTags';
 import { Artist, ArtistQuery } from '../types/Artist';
 import { TagsQuery } from '../types/Tag';
+import './../App.css';
 
 const Styled = styled.div`
-    border: 4px solid black;
+    border: 4px solid var(--color-foreground);
     margin: 1em;
     padding: 1em;
     form {
@@ -20,8 +21,8 @@ const Styled = styled.div`
     }
     button {
         margin-left: 1em;
-        background-color: black;
-        color: white;
+        background-color: var(--color-foreground);
+        color: var(--color-background);
         border: 0;
         padding: 0.5em;
     }
