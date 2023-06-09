@@ -16,6 +16,9 @@ export const fetchArtists = async ({ queryKey }: QueryFunctionContext<string[]>)
       format: 'json'
     }
 
+    if (username == '')
+        throw new Error('No username given')
+
     if (!apiKey || !apiRoot) 
         throw new Error('Environment variables are not accessible')
 
