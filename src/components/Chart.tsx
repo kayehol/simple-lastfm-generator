@@ -9,37 +9,41 @@ import { TagsQuery } from '../types/Tag';
 import './../App.css';
 
 const Styled = styled.div`
-    border: 4px solid var(--color-foreground);
-    margin: 1em;
-    padding: 1em;
     form {
-        margin-bottom: 1em;
-    }
-    input {
-        border: 2px solid black;
-        padding: 0.5em 0 0.5em 0.5em;
-    }
-    button {
-        margin-left: 1em;
-        background-color: var(--color-foreground);
-        color: var(--color-background);
-        border: 0;
-        padding: 0.5em;
-    }
-    .output {
-        font-size: 150%;
-        padding: 1em;
-        border: 1px solid grey;
-        height: 20vh;
-        width: 40vw;
-        word-wrap; break-word;
-    }
-    .upperForm {
         display: flex;
         flex-direction: row;
     }
-    .config {
-        margin-left: 1em;
+    button {
+        width: 25%;
+        margin-left: 0.5em;
+        background-color: var(--color-background);
+        color: var(--color-foreground);
+        border: 2px solid var(--color-foreground);
+        cursor: pointer;
+    }
+    button:hover {
+        border: 2px solid red;
+    }
+    button p {
+        font-size: 200%;
+    }
+    input {
+        width: 90%;
+        font-size: 400%;
+    }
+    .output {
+        height: 100vh;
+        font-size: 300%;
+        text-wrap: wrap;
+        text-align: left;
+        padding: 0.25em;
+    }
+    .upperForm {
+        display: flex;
+        flex-direction: column;
+    }
+    #tags {
+        font-size: 75%;
     }
     @media screen and (max-width: 900px) {
         .output {
@@ -73,11 +77,11 @@ export const Chart = () => {
             return `${artist['@attr'].rank}. ${artist.name}`;
         });
 
-        return artistNameRank.join(' | ');
+        return artistNameRank.join('\n');
     }
     const formatTags = (tags: TagsQuery): string => {
         const tagsList: string[] = tags.map((tag) => tag?.toptags?.tag[0]?.name);
-        return tagsList.length > 0 ? `tags: ${tagsList.join(', ')}` : '';
+        return tagsList.length > 0 ? `${tagsList.join(', ')}` : '';
     }
 
     return (
@@ -91,7 +95,7 @@ export const Chart = () => {
                         placeholder="username" 
                     />
                     <button type="submit" onClick={() => refetch()}>
-                        generate
+                        <p>GENERATE</p>
                     </button>
                 </form>
                 <div className='config'>
@@ -100,7 +104,9 @@ export const Chart = () => {
             </div>
             <div className='output'>
                 {topArtists && <p>{formatArtist(topArtists)}</p>}
-                {tags && <p>{formatTags(tags)}</p>}
+                <div id="tags">
+                    {tags && <p>{formatTags(tags)}</p>}
+                </div>
                 {isError && error instanceof Error && <>{error.message}</>}
                 {isLoading && <pre>Loading...</pre>}
             </div>

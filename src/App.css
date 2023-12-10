@@ -6,19 +6,13 @@ body {
   --color-foreground: #1f2023;
   background-color: var(--color-background);
   color: var(--color-foreground);
+  font-family: sans-serif;
 }
 .container {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  flex-direction: column;
   margin: 0;
-  padding: 2em;
-}
-@media screen and (max-width: 900px) {
-  .container {
-    flex-direction: column;
-    padding: 0;
-  }
+  padding: 1em;
 }
 @media (prefers-color-scheme: dark) {
   body {
