@@ -5,12 +5,12 @@ import { Params } from '../types/Params';
 export const fetchArtists = async ({ queryKey }: QueryFunctionContext<string[]>): Promise<ArtistQuery> => {
     const apiKey: string = import.meta.env.VITE_LASTFM_API_KEY; 
     const apiRoot: string = import.meta.env.VITE_LASTFM_API_ROOT;
-    const [_key, username] = queryKey;
-    
+    const [_key, username, period] = queryKey;
+
     const params: Params = {
       method: 'user.gettopartists',
       user: username,
-      period: '7day',
+      period: period,
       limit: 5,
       api_key: apiKey,
       format: 'json'

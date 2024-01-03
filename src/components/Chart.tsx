@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { fetchArtists } from '../queries/fetchArtists';
 import { fetchTags } from '../queries/fetchTags';
 import { Artist, ArtistQuery } from '../types/Artist';
+import { Period } from '../types/Period';
 import { TagsQuery } from '../types/Tag';
 import './../App.css';
 
@@ -58,12 +59,38 @@ const Styled = styled.div`
 
 export const Chart = () => {
     const [ username, setUsername ] = useState('');
+    const [ period, setPeriod ] = useState('7day');
+    // const periods : string[] = ['overall','7day','1month','3month','6month','12month'];
+    const periods: Period[] = [
+        {
+            id: 'overall',
+            description: 'Overall'
+        },
+        {
+            id: '7day',
+            description: '7 days'
+        },
+        {
+            id: '1month',
+            description: '1 month'
+        },
+        {
+            id: '3month',
+            description: '3 months'
+        },
+        {
+            id: '6month',
+            description: '6 months'
+        },
+        {
+            id: '12month',
+            description: '12 months'
+        },
+    ];
 
-    // get top artists
-    const { isLoading, isError, data: topArtists, error, refetch } = useQuery(['artists', username], fetchArtists, { 
+    const { isLoading, isError, data: topArtists, error, refetch } = useQuery(['artists', username, period], fetchArtists, { 
         enabled: false 
     });
-    // get top tags for every artist
     const { data: tags } = useQuery(['tags', topArtists], fetchTags, {
         enabled: !!topArtists 
     });
@@ -84,6 +111,8 @@ export const Chart = () => {
         return tagsList.length > 0 ? `${tagsList.join(', ')}` : '';
     }
 
+    const onPeriodChange = (e: any) => setPeriod(e.target.value);
+
     return (
         <Styled>
             <div className='upperForm'>
@@ -94,12 +123,26 @@ export const Chart = () => {
                         onChange={event => setUsername(event.currentTarget?.value)}
                         placeholder="username" 
                     />
+                    <select
+                        onChange={onPeriodChange}
+                    >
+                        {periods.map((item: Period) => 
+                            <option
+                                id={item.id}
+                                value={item.id}
+                            >
+                                {item.description}
+                            </option>
+                        )}
+                    </select>
                     <button type="submit" onClick={() => refetch()}>
                         <p>GENERATE</p>
                     </button>
                 </form>
                 <div className='config'>
-                    {username && <pre>Output for {username}'s last 7 days:</pre>}
+                    <pre>
+                        Output for {username ? username : 'your'} last {period}:
+                    </pre>
                 </div>
             </div>
             <div className='output'>
