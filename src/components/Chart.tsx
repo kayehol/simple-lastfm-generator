@@ -7,6 +7,7 @@ import { fetchTags } from '../queries/fetchTags';
 import { Artist, ArtistQuery } from '../types/Artist';
 import { Period } from '../types/Period';
 import { TagsQuery } from '../types/Tag';
+import { periods } from './configs/periods';
 import './../App.css';
 
 const Styled = styled.div`
@@ -60,33 +61,7 @@ const Styled = styled.div`
 export const Chart = () => {
     const [ username, setUsername ] = useState('');
     const [ period, setPeriod ] = useState('7day');
-    // const periods : string[] = ['overall','7day','1month','3month','6month','12month'];
-    const periods: Period[] = [
-        {
-            id: 'overall',
-            description: 'Overall'
-        },
-        {
-            id: '7day',
-            description: '7 days'
-        },
-        {
-            id: '1month',
-            description: '1 month'
-        },
-        {
-            id: '3month',
-            description: '3 months'
-        },
-        {
-            id: '6month',
-            description: '6 months'
-        },
-        {
-            id: '12month',
-            description: '12 months'
-        },
-    ];
+    
 
     const { isLoading, isError, data: topArtists, error, refetch } = useQuery(['artists', username, period], fetchArtists, { 
         enabled: false 
