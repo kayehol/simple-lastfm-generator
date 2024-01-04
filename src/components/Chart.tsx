@@ -15,12 +15,13 @@ const Styled = styled.div`
         display: flex;
         flex-direction: row;
     }
-    button {
-        width: 25%;
-        margin-left: 0.5em;
+    button, select, input {
         background-color: var(--color-background);
         color: var(--color-foreground);
-        border: 2px solid var(--color-foreground);
+    }
+    button, select {
+        width: 25%;
+        margin-left: 0.5em;
         cursor: pointer;
     }
     button:hover {
@@ -32,6 +33,10 @@ const Styled = styled.div`
     input {
         width: 90%;
         font-size: 400%;
+    }
+    select {
+        font-size: 150%;
+        text-align: center;
     }
     .output {
         height: 100vh;
@@ -61,8 +66,8 @@ const Styled = styled.div`
 export const Chart = () => {
     const [ username, setUsername ] = useState('');
     const [ period, setPeriod ] = useState('7day');
+    const currentPeriodDescription = periods.filter(item => item.id == period).map(item => item.description)
     
-
     const { isLoading, isError, data: topArtists, error, refetch } = useQuery(['artists', username, period], fetchArtists, { 
         enabled: false 
     });
@@ -86,7 +91,9 @@ export const Chart = () => {
         return tagsList.length > 0 ? `${tagsList.join(', ')}` : '';
     }
 
-    const onPeriodChange = (e: any) => setPeriod(e.target.value);
+    const onPeriodChange = (e: any) => {
+        setPeriod(e.target.value);
+    }
 
     return (
         <Styled>
@@ -106,7 +113,7 @@ export const Chart = () => {
                                 id={item.id}
                                 value={item.id}
                             >
-                                {item.description}
+                                {item.description.toUpperCase()}
                             </option>
                         )}
                     </select>
@@ -116,7 +123,7 @@ export const Chart = () => {
                 </form>
                 <div className='config'>
                     <pre>
-                        Output for {username ? username : 'your'} last {period}:
+                        Output for {username ? username : 'your'} {period == 'overall' ? 'activity' : 'last'} {currentPeriodDescription}:
                     </pre>
                 </div>
             </div>
