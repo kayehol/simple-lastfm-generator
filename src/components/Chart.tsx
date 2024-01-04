@@ -24,7 +24,7 @@ const Styled = styled.div`
         margin-left: 0.5em;
         cursor: pointer;
     }
-    button:hover {
+    button:hover, select:hover {
         border: 2px solid red;
     }
     button p {
@@ -37,6 +37,14 @@ const Styled = styled.div`
     select {
         font-size: 150%;
         text-align: center;
+    }
+    input::selection {
+        color:#fff;
+        background: red;
+    }
+    input::-moz-selection {
+        color:#fff;
+        background: red;
     }
     .output {
         height: 100vh;
@@ -110,6 +118,7 @@ export const Chart = () => {
                     >
                         {periods.map((item: Period) => 
                             <option
+                                key={item.id}
                                 id={item.id}
                                 value={item.id}
                             >
